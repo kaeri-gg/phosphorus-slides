@@ -1,0 +1,58 @@
+name: Deploy to GitHub Pages
+
+# Builds the Vite site and publishes dist/ to GitHub Pages on every push to
+# main. dist/ stays gitignored — build output never touches main's history.
+#
+# One-time setup needed in the GitHub repo:
+#   Settings → Pages → Source: "GitHub Actions"
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:    # also allow manual runs from the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Don't queue parallel deploys; cancel in-flight if a newer push lands.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        # vite.config.js uses base: './', so the site works under /<repo>/.
+        run: npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

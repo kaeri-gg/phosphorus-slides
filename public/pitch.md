@@ -11,12 +11,12 @@
 
 <step id="hook" layout="center">
 <title>White Phosphorus</title>
-<subtitle>An Explosive Escape: a platformer where the air is trying to kill you</subtitle>
+<subtitle>An Explosive Escape: you are a rock that bursts into flames when it touches air. Stay wet.</subtitle>
 </step>
 
 <step id="why" layout="video-expanded">
 <title>Chemistry you can play</title>
-<subtitle>Tallinn University · Learning Game Development</subtitle>
+<subtitle>Made in Tallinn · Tallinn University · Learning Game Development</subtitle>
 
 <image src="assets/pitch/comic-water.png" name="Phosphorus ignites in air" window="false" fit="contain"></image>
 </step>
@@ -33,11 +33,15 @@
 <edge from="n-acid" to="n-water" from-port="top" to-port="bottom" label="Recover"></edge>
 </step>
 
+<!-- GAMEPLAY: ~45 s of live narration over a looping clip.
+     1. Record 20-30 s of Level 2 (tank -> jump -> burn -> next tank -> valve) and save it as public/assets/pitch/gameplay.mp4
+     2. Replace the <image> below with:
+        <video src="assets/pitch/gameplay.mp4" name="Level 2, live" window="true" fit="contain"></video> -->
 <step id="gameplay" layout="video-expanded">
-<title>Escape the factory</title>
-<subtitle>Hop between water tanks · dodge fireworks, bombs and red pipes · open valves to fill the tanks</subtitle>
+<title>Watch a jump</title>
+<subtitle>Safe in the tank · leap into the air · burning, 7 HP ticking down · land in the next tank · open the valve</subtitle>
 
-<image src="assets/pitch/level.png" name="Level 2" window="true"></image>
+<image src="assets/pitch/level.png" name="Level 2: fireworks, bombs, red pipes, valves" window="true"></image>
 </step>
 
 <step id="learning" layout="video-expanded">
@@ -47,13 +51,21 @@
 <image src="assets/pitch/comic-oven.png" name="Red phosphorus, in the vacuum oven" window="true" fit="contain"></image>
 </step>
 
-<step id="team" layout="center">
-<title>Four students, one web game</title>
-<subtitle>Anna Arsenina · Ai Dinh · Liu Qianying · Kathleen Povadora. Art, levels, code, sound and story, built in Godot 4.6.</subtitle>
+<step id="award" layout="nodes">
+<title>Why it deserves Game of the Year</title>
+<subtitle>A small Estonian-made game with one clear idea, finished</subtitle>
+
+<node id="n-idea" name="One idea" description="The rulebook is the chemistry" icon="fa-lightbulb" x="50" y="22" color="#facc15" highlight="true"></node>
+<node id="n-learn" name="Learning that sticks" description="Felt in play, not read" icon="fa-graduation-cap" x="22" y="74" color="#38bdf8"></node>
+<node id="n-open" name="Open to everyone" description="Free, in the browser, no install" icon="fa-globe" x="78" y="74" color="#34d399"></node>
+
+<edge from="n-idea" to="n-learn" from-port="bottom" to-port="top" label="Teaches"></edge>
+<edge from="n-idea" to="n-open" from-port="bottom" to-port="top" label="Reaches"></edge>
 </step>
 
 <step id="play" layout="video-expanded">
-<title>Play it in your browser</title>
+<title>Play it now, in your browser</title>
+<subtitle>Anna Arsenina · Ai Dinh · Liu Qianying · Kathleen Povadora. Built in Godot 4.6.</subtitle>
 
 <qrcode src="assets/pitch/qr-itch.png" title="Play on itch.io" url="https://kaeri-gg.itch.io/white-phosphorus-an-explosive-escape" desc="Free, no install. Godot 4.6, web build."></qrcode>
 
