@@ -11,9 +11,7 @@ export default defineConfig({
     build: {
         rollupOptions: {
             input: {
-                // index.html is the 2-minute pitch deck; engine.html is the markdown slide engine (conference.md).
-                main: resolve(__dirname, 'index.html'),
-                engine: resolve(__dirname, 'engine.html')
+                main: resolve(__dirname, 'index.html')
             }
         },
         sourcemap: true,

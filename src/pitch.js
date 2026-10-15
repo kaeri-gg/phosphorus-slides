@@ -174,10 +174,12 @@ addEventListener('keydown', e => {
 });
 
 viewport.addEventListener('click', e => {
-    if (e.target.closest('a, #timer')) return;
+    if (e.target.closest('a, #timer, #home')) return;
     const x = e.clientX / innerWidth;
     go(x < 0.2 ? -1 : 1);
 });
+
+document.getElementById('home').addEventListener('click', e => { show(0); e.currentTarget.blur(); });
 
 // ---------- Timer (starts on first advance; click to pause) ----------
 let remaining = PITCH_SECONDS;

@@ -1,6 +1,6 @@
 # White Phosphorus: An Explosive Escape: 3-minute pitch (Estonian Game of the Year)
 
-Slides live in `public/pitch.md` (7 slides). Spoken script is ~390 words plus ~40 s of live gameplay narration, about 2:50 total. Advance with the right arrow key. The on-screen timer is set to 3:00.
+Slides live in `index.html` (7 slides; styles in `src/styles/pitch.css`, behaviour in `src/pitch.js`). Spoken script is ~390 words plus ~40 s of live gameplay narration, about 2:50 total. Advance with the right arrow key. The on-screen timer is set to 3:00.
 
 | # | Slide | Time | Cumulative |
 |---|-------|------|------------|
