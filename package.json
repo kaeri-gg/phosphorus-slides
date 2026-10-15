@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --mode=production",
+    "build:dev": "vite build --mode=development",
     "preview": "vite preview",
     "serve": "node scripts/server.js",
-    "convert:videos": "node scripts/convert-videos.js",
+    "convert:videos": "node scripts/convert-videos.js"
 
   },
   "devDependencies": {

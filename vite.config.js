@@ -15,6 +15,9 @@ export default defineConfig({
                 main: resolve(__dirname, 'index.html'),
                 engine: resolve(__dirname, 'engine.html')
             }
-        }
+        },
+        sourcemap: true,
+        assetsDir: './assets',
+        emptyOutDir: true,
     }
 });
