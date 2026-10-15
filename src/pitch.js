@@ -89,7 +89,7 @@ function layoutWhy(active, instant = false) {
 }
 
 // sub 0 = grand-entrance title, sub 1..n = the cards
-function setSub(n, instant = false) {
+function setWhy(n, instant = false) {
     const prev = sub - 1;
     const card = n - 1;
     sub = n;
@@ -103,6 +103,20 @@ function setSub(n, instant = false) {
         whyTitle.classList.remove('swap');
         void whyTitle.offsetWidth;
         whyTitle.classList.add('swap');
+    }
+}
+
+// Gameplay slide: step 0 = teaser, step 1 = nodes, then the lines + video follow on their own.
+let playTimer = 0;
+function setSub(slide, n, instant = false) {
+    if (slide === whySlide) { setWhy(n, instant); return; }
+    sub = n;
+    clearTimeout(playTimer);
+    if (n === 0) slide.dataset.phase = 'intro';
+    else if (instant) slide.dataset.phase = 'link';
+    else {
+        slide.dataset.phase = 'nodes';
+        playTimer = setTimeout(() => { if (sub === n) slide.dataset.phase = 'link'; }, 1700);
     }
 }
 
@@ -122,7 +136,7 @@ function show(n, fromEnd = false) {
         prev.querySelectorAll('video').forEach(v => v.pause());
     }
     const next = slides[n];
-    if (next.dataset.steps) setSub(fromEnd ? whyCards.length : 0, true);
+    if (next.dataset.steps) setSub(next, fromEnd ? +next.dataset.steps - 1 : 0, true);
     next.classList.remove('leaving');
     // Restart entrance animations by toggling the class on a fresh frame.
     void next.offsetWidth;
@@ -140,8 +154,8 @@ function show(n, fromEnd = false) {
 
 const go = d => {
     const steps = +slides[current].dataset.steps || 0;
-    if (steps && d > 0 && sub < steps - 1) setSub(sub + 1);
-    else if (steps && d < 0 && sub > 0) setSub(sub - 1);
+    if (steps && d > 0 && sub < steps - 1) setSub(slides[current], sub + 1);
+    else if (steps && d < 0 && sub > 0) setSub(slides[current], sub - 1);
     else show(current + d, d < 0);
 };
 
