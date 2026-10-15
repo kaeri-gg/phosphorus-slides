@@ -21,6 +21,8 @@
       </svg>
     </div>
 
+    <button id="home" type="button" title="Back to slide 1 (Home)" aria-label="Back to slide 1"><i class="fa-solid fa-house"></i></button>
+
     <!-- HUD: 7 HP bar doubles as deck progress; timer is the 2-minute clock -->
     <div id="hud">
       <div id="timer" title="T: show / hide · click: pause">2:00</div>
@@ -30,31 +32,49 @@
     <!-- 1. Title -->
     <section class="slide s-title" data-water="16">
       <div class="logos">
-        <span class="logo-pill"><img src="./assets/logos/TLU-logo-pilt.gif" alt="Tallinn University"></span>
-        <span class="logo-pill dark"><img src="./assets/logos/dlg.svg" alt="Digital Learning Games"></span>
+        <span class="logo-pill"><img src="./assets/logos/tallinn-uni.png" alt="Tallinn University"></span>
+        <span class="logo-pill dark"><img src="./assets/logos/dlg-logo.png" alt="Digital Learning Games"></span>
       </div>
       <img class="hero-logo" src="./assets/pitch/logo.png" alt="White Phosphorus: An Explosive Escape">
-      <p class="tagline a" style="--i:5">A 2D puzzle-platformer about staying wet.</p>
-      <p class="meta a" style="--i:6">Available now on itch.io · PC &amp; mobile</p>
+      <p class="tagline a" style="--i:5">A 2D platformer about white phosphorus.</p>
+      <p class="meta a" style="--i:6">Available on itch.io · PC &amp; mobile</p>
       <p class="byline a" style="--i:7">Anna &amp; Kathleen · Tallinn University</p>
     </section>
 
-    <!-- 2. Meet Phos -->
+    <!-- 2. Team: we introduce ourselves first -->
+    <section class="slide s-team" data-water="6">
+      <h2 class="a" style="--i:1"><span class="phos">Hello,</span> we are</h2>
+      <div class="people">
+        <article class="person a" style="--i:2">
+          <div class="photo" data-initials="AA"><img src="./assets/team/anna.jpg" alt="Anna Arsenina" onerror="this.remove()"></div>
+          <h3>Anna Arsenina</h3>
+          <p class="role">Artist</p>
+          <span class="folio"><i class="fa-brands fa-discord"></i>annars9030</span>
+        </article>
+        <article class="person a" style="--i:3">
+          <div class="photo" data-initials="KP"><img src="./assets/team/kath.jpg" alt="Kathleen Povadora" onerror="this.remove()"></div>
+          <h3>Kathleen Povadora</h3>
+          <p class="role">Developer</p>
+          <a class="folio" href="https://kaeri-gg.github.io/" target="_blank" rel="noopener"><i class="fa-solid fa-link"></i>kaeri-gg.github.io</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3. Meet Phos -->
     <section class="slide s-phos" data-water="6">
       <figure class="comic a" style="--i:1">
-        <img src="./assets/pitch/comic-water.png" alt="Phos ignites when pulled out of water">
+        <img src="./assets/pitch/not%20a%20monster.png" alt="Phos ignites when pulled out of water">
         <figcaption class="bubble a" style="--i:5">…but I'm no monster.</figcaption>
       </figure>
       <div class="copy">
         <h2 class="a" style="--i:2">Meet <span class="phos">Phos</span></h2>
-        <p class="lead a" style="--i:3">A friendly piece of white phosphorus that bursts into flames in air.</p>
-        <p class="lead a" style="--i:4">He doesn't want to become bombs or fireworks. Get him to the vacuum oven, where he turns into safe, stable <b class="red">red phosphorus</b>.</p>
+        <p class="lead a" style="--i:3">A friendly piece of white phosphorus that bursts into flames <b class="red">when exposed to air</b></p>
       </div>
     </section>
 
-    <!-- 3. Real chemistry is the rulebook -->
+    <!-- 4. Real chemistry is the rulebook -->
     <section class="slide s-rules" data-water="4">
-      <h2 class="grad a" style="--i:1">Real chemistry is the rulebook</h2>
+      <h2 class="a" style="--i:1"><span class="phos">Real chemistry</span> is the rulebook</h2>
       <p class="sub a" style="--i:2">Every mechanic comes from a real property of white phosphorus</p>
       <svg class="edges" viewBox="0 0 1600 900" aria-hidden="true">
         <path id="e1" class="edge a" style="--i:5" d="M800 455 C800 570 360 550 360 635"/>
@@ -69,86 +89,78 @@
       <div class="node acid a" style="--i:5;left:1240px;top:690px"><i class="fa-solid fa-flask"></i><b>Phosphoric acid</b><span>Glowing blue: heals you</span></div>
     </section>
 
-    <!-- 4. Gameplay video -->
-    <section class="slide s-play" data-water="4">
-      <div class="copy">
-        <h2 class="a" style="--i:1">Real chemistry,<br>real pressure</h2>
-        <ul class="rules">
-          <li class="a safe" style="--i:2"><i class="fa-solid fa-droplet"></i><div><b>In water</b><span>Phos is completely safe</span></div></li>
-          <li class="a hot" style="--i:3"><i class="fa-solid fa-fire"></i><div><b>In air</b><span>He burns and loses HP</span></div></li>
-          <li class="a" style="--i:4"><i class="fa-solid fa-gears"></i><div><b>Your job</b><span>Time jumps between tanks, turn valves, dodge fire and explosives</span></div></li>
-        </ul>
+    <!-- 5. Gameplay video -->
+    <section class="slide s-play has-hero" data-water="4" data-steps="2" data-phase="intro">
+      <div class="why-glow" aria-hidden="true"></div>
+      <div class="why-hero">
+        <h2 class="why-hero-title">The <span class="phos">gameplay</span></h2>
       </div>
-      <div class="screen a" style="--i:2">
+      <!-- Connections run node -> video, drawn one by one (see .pedge in pitch.css) -->
+      <svg class="edges" viewBox="0 0 1600 900" aria-hidden="true">
+        <defs>
+          <mask id="pm0" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="900"><path class="pmask" style="--i:0" pathLength="1" d="M680 240 C790 240 770 300 880 300"/></mask>
+          <mask id="pm1" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="900"><path class="pmask" style="--i:1" pathLength="1" d="M680 450 C790 450 770 450 880 450"/></mask>
+          <mask id="pm2" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="900"><path class="pmask" style="--i:2" pathLength="1" d="M680 660 C790 660 770 600 880 600"/></mask>
+        </defs>
+        <path class="pedge" mask="url(#pm0)" d="M680 240 C790 240 770 300 880 300"/>
+        <path class="pedge" mask="url(#pm1)" d="M680 450 C790 450 770 450 880 450"/>
+        <path class="pedge" mask="url(#pm2)" d="M680 660 C790 660 770 600 880 600"/>
+        <circle class="pport" style="--i:0" cx="880" cy="300" r="8"/>
+        <circle class="pport" style="--i:1" cx="880" cy="450" r="8"/>
+        <circle class="pport" style="--i:2" cx="880" cy="600" r="8"/>
+        <circle class="dot pdot" style="--i:0" r="6"><animateMotion dur="2.4s" repeatCount="indefinite" path="M680 240 C790 240 770 300 880 300"/></circle>
+        <circle class="dot pdot" style="--i:1" r="6"><animateMotion dur="2.4s" begin="0.6s" repeatCount="indefinite" path="M680 450 C790 450 770 450 880 450"/></circle>
+        <circle class="dot pdot" style="--i:2" r="6"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" path="M680 660 C790 660 770 600 880 600"/></circle>
+      </svg>
+      <div class="node pn water" style="--i:0;top:240px"><i class="fa-solid fa-droplet"></i><b>In water</b><span>Phos is completely safe</span></div>
+      <div class="node pn air" style="--i:1;top:450px"><i class="fa-solid fa-fire"></i><b>In air</b><span>He burns and loses HP</span></div>
+      <div class="node pn job" style="--i:2;top:660px"><i class="fa-solid fa-gears"></i><b>Your job</b><span>Time jumps between tanks, turn valves, dodge fire and explosives</span></div>
+      <div class="screen">
         <video id="vid-gameplay" src="./assets/videos/gameplay.mp4" muted loop playsinline preload="auto"></video>
-        <span class="rec"><i></i>Live gameplay</span>
+        <span class="rec"><i></i>Gameplay</span>
       </div>
     </section>
 
-    <!-- 4. Second video (placeholder: set VIDEO_2 in src/pitch.js) -->
-    <section class="slide s-play2" data-water="4">
-      <div class="copy">
-        <h2 class="a" style="--i:1">Second video</h2>
-        <p class="lead a" style="--i:2">Placeholder for the next clip.</p>
+    <!-- 6. Why check it out: 3D card gallery, Right arrow steps through the reasons (data-steps) -->
+    <section class="slide s-why has-hero" data-water="5" data-steps="4" data-phase="intro">
+      <div class="why-glow" aria-hidden="true"></div>
+      <div class="why-hero">
+        <h2 class="why-hero-title">Why check out <span class="phos">our game</span>?</h2>
+        <p class="why-hero-sub">Three reasons to play White Phosphorus</p>
       </div>
-      <div class="screen placeholder a" style="--i:2" id="screen-2">
-        <video id="vid-2" muted loop playsinline preload="auto" hidden></video>
-        <div class="ph">
-          <i class="fa-solid fa-circle-play"></i>
-          <b>Video coming soon</b>
-          <span>Drop the file in <code>public/assets/videos/</code> and set <code>VIDEO_2</code></span>
+      <div class="why-left">
+        <span class="why-badge a" style="--i:1">Why check out our game?</span>
+        <h2 class="why-title a" style="--i:2" id="why-title">Learning is the gameplay</h2>
+        <div class="why-pager a" style="--i:3">
+          <div class="why-dots" id="why-dots"><i></i><i></i><i></i></div>
+          <span id="why-count">01 / 03</span>
         </div>
       </div>
-    </section>
-
-    <!-- 5. Why check it out -->
-    <section class="slide s-why" data-water="5">
-      <h2 class="a" style="--i:1">Why check out our game?</h2>
-      <div class="reasons">
-        <article class="a" style="--i:2">
-          <i class="fa-solid fa-flask-vial"></i>
-          <h3>Learning is the gameplay</h3>
-          <p>Chemistry concepts are woven straight into the core mechanics.</p>
-        </article>
-        <article class="a" style="--i:3">
-          <i class="fa-solid fa-child-reaching"></i>
-          <h3>Easy and free</h3>
-          <p>Family-friendly for ages 7+. Plays in your browser, no install.</p>
-        </article>
-        <article class="a" style="--i:4">
-          <i class="fa-solid fa-atom"></i>
-          <h3>Room to grow</h3>
-          <p>Sets the stage for other allotropes and properties of phosphorus.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- 6. Team -->
-    <section class="slide s-team" data-water="6">
-      <h2 class="a" style="--i:1">Who made it</h2>
-      <div class="people">
-        <article class="person a" style="--i:2">
-          <div class="photo" data-initials="KP"><img src="./assets/team/kathleen.jpg" alt="Kathleen Povadora" onerror="this.remove()"></div>
-          <h3>Kathleen Povadora</h3>
-          <p class="role">Developer</p>
-          <a class="folio" href="https://kaeri-gg.github.io/" target="_blank" rel="noopener"><i class="fa-solid fa-link"></i>kaeri-gg.github.io</a>
-        </article>
-        <article class="person a" style="--i:3">
-          <div class="photo" data-initials="AA"><img src="./assets/team/anna.jpg" alt="Anna Arsenina" onerror="this.remove()"></div>
-          <h3>Anna Arsenina</h3>
-          <p class="role">Artist</p>
-          <span class="folio soon"><i class="fa-solid fa-link"></i>portfolio coming soon</span>
-        </article>
+      <div class="why-3d" aria-hidden="false">
+        <div class="why-stack" id="why-stack">
+          <article class="why-card" data-title="Learning is the gameplay">
+            <img src="./assets/pitch/learning%20is%20the%20gameplay.png" alt="">
+            <span class="why-label"><i class="fa-solid fa-flask-vial"></i>Learning is the gameplay</span>
+          </article>
+          <article class="why-card" data-title="Easy and free">
+            <img src="./assets/pitch/easy%20and%20free.png" alt="">
+            <span class="why-label"><i class="fa-solid fa-child-reaching"></i>Easy and free</span>
+          </article>
+          <article class="why-card" data-title="Room to grow">
+            <img src="./assets/pitch/room%20to%20grow.png" alt="">
+            <span class="why-label"><i class="fa-solid fa-atom"></i>Room to grow</span>
+          </article>
+        </div>
       </div>
     </section>
 
     <!-- 7. Close -->
     <section class="slide s-end" data-water="20">
-      <div class="oven a" style="--i:1">
-        <img src="./assets/pitch/comic-oven.png" alt="Red phosphorus safe in the vacuum oven">
+      <div class="oven comic a" style="--i:1">
+        <img src="./assets/pitch/last-part.png" alt="Red phosphorus safe in the vacuum oven">
       </div>
       <div class="copy">
-        <h2 class="a" style="--i:2">Help Phos reach safety</h2>
+        <h2 class="a" style="--i:2">Help <span class="phos">Phos</span> reach safety</h2>
         <p class="lead a" style="--i:3">Try <b>White Phosphorus: An Explosive Escape</b> today.</p>
         <div class="get a" style="--i:4">
           <div class="qr"><img src="./assets/pitch/qr-itch.png" alt="QR code to play on itch.io"></div>

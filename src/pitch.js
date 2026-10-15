@@ -1,15 +1,15 @@
 import '@fontsource/fredoka/500.css';
 import '@fontsource/fredoka/700.css';
+import '@fontsource/nunito/500.css';
+import '@fontsource/nunito/600.css';
+import '@fontsource/nunito/700.css';
+import '@fontsource/nunito/800.css';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './styles/pitch.css';
-
-// Second gameplay video. Put the file in public/assets/videos/ and set the path,
-// e.g. './assets/videos/second.mp4'. Empty string keeps the placeholder.
-const VIDEO_2 = '';
 
 const PITCH_SECONDS = 120;
 
@@ -30,20 +30,12 @@ addEventListener('resize', fit);
 fit();
 
 // ---------- HP bar = progress (one segment per slide) ----------
-slides.forEach(() => {
+slides.forEach((_, n) => {
     const seg = document.createElement('i');
+    seg.style.setProperty('--t', slides.length > 1 ? (n / (slides.length - 1) * 100).toFixed(1) + '%' : '0%');
     hp.appendChild(seg);
 });
 const segs = [...hp.children];
-
-// ---------- Video 2 placeholder swap ----------
-const vid2 = document.getElementById('vid-2');
-if (VIDEO_2) {
-    vid2.src = VIDEO_2;
-    vid2.hidden = false;
-    document.getElementById('screen-2').classList.remove('placeholder');
-    document.querySelector('#screen-2 .ph').remove();
-}
 
 // Autoplay + loop. Muted is required for browsers to allow autoplay; if the file
 // is still loading, start as soon as it can play.
@@ -58,18 +50,94 @@ function playVideo(v) {
     });
 }
 
+// ---------- Sub-steps: a slide with data-steps (the "Why" card gallery) eats arrow presses first ----------
+const whySlide = document.querySelector('.s-why');
+const whyStack = document.getElementById('why-stack');
+const whyCards = [...whyStack.children];
+const whyTitle = document.getElementById('why-title');
+const whyDots = [...document.querySelectorAll('#why-dots i')];
+const whyCount = document.getElementById('why-count');
+let sub = 0;
+
+// Card depth layout, same maths as the threejs-slides gallery (scaled to the 1600x900 stage).
+function layoutWhy(active, instant = false) {
+    whyCards.forEach((card, i) => {
+        const o = i - active;
+        let t, op, blur = 0, bright = 1, z;
+        if (o === 0) {
+            t = 'translate3d(60px,0,0) rotateY(-18deg)';
+            op = 1; bright = 1.05; z = 30;
+        } else if (o > 0) {
+            t = `translate3d(${60 + o * 95}px,${-o * 8}px,${-o * 125}px) rotateY(${-18 - o * 4.5}deg) scale(${1 - o * 0.07})`;
+            op = Math.max(0.28, 0.82 - o * 0.16); blur = Math.min(2, o * 0.7); bright = Math.max(0.65, 0.94 - o * 0.09); z = 30 - o;
+        } else {
+            t = `translate3d(${60 + o * 120 - 50}px,0,${o * 100}px) rotateY(15deg) scale(${1 + o * 0.1})`;
+            op = 0; blur = 4; z = 5;
+        }
+        card.style.transition = instant ? 'none' : '';
+        card.style.transform = t;
+        card.style.opacity = op;
+        card.style.zIndex = z;
+        card.style.filter = `blur(${blur}px) brightness(${bright})`;
+        card.style.boxShadow = o === 0
+            ? '0 30px 60px -15px rgba(0,0,0,.95), 0 0 32px rgba(107,202,186,.45), 0 0 70px rgba(60,140,255,.22)'
+            : `0 ${20 - o * 3}px 40px -10px rgba(0,0,0,.9), 0 0 ${Math.max(0, 20 - o * 3)}px rgba(107,202,186,${Math.max(0, 0.25 - o * 0.05)})`;
+        card.style.pointerEvents = 'none';
+        card.classList.toggle('front', o === 0);
+    });
+    if (instant) { void whyStack.offsetWidth; whyCards.forEach(c => { c.style.transition = ''; }); }
+}
+
+// sub 0 = grand-entrance title, sub 1..n = the cards
+function setWhy(n, instant = false) {
+    const prev = sub - 1;
+    const card = n - 1;
+    sub = n;
+    whySlide.dataset.phase = card < 0 ? 'intro' : 'cards';
+    layoutWhy(Math.max(card, -1), instant);
+    whyDots.forEach((d, i) => d.classList.toggle('on', i === card));
+    if (card < 0) return;
+    whyCount.textContent = `${String(card + 1).padStart(2, '0')} / ${String(whyCards.length).padStart(2, '0')}`;
+    whyTitle.textContent = whyCards[card].dataset.title;
+    if (prev >= 0 && prev !== card) {
+        whyTitle.classList.remove('swap');
+        void whyTitle.offsetWidth;
+        whyTitle.classList.add('swap');
+    }
+}
+
+// Gameplay slide: step 0 = teaser, step 1 = nodes, then the lines + video follow on their own.
+let playTimer = 0;
+function setSub(slide, n, instant = false) {
+    if (slide === whySlide) { setWhy(n, instant); return; }
+    sub = n;
+    clearTimeout(playTimer);
+    if (n === 0) slide.dataset.phase = 'intro';
+    else if (instant) slide.dataset.phase = 'link';
+    else {
+        slide.dataset.phase = 'nodes';
+        playTimer = setTimeout(() => { if (sub === n) slide.dataset.phase = 'link'; }, 1700);
+    }
+}
+
 // ---------- Navigation ----------
 let current = -1;
 
-function show(n) {
+function show(n, fromEnd = false) {
     n = Math.max(0, Math.min(slides.length - 1, n));
     if (n === current) return;
     const prev = slides[current];
     if (prev) {
         prev.classList.remove('active');
+        if (prev.classList.contains('s-title')) {
+            prev.classList.add('leaving');
+            setTimeout(() => prev.classList.remove('leaving'), 900);
+        }
         prev.querySelectorAll('video').forEach(v => v.pause());
     }
     const next = slides[n];
+    if (next.dataset.steps) setSub(next, fromEnd ? +next.dataset.steps - 1 : 0, true);
+    next.classList.remove('leaving');
     // Restart entrance animations by toggling the class on a fresh frame.
     void next.offsetWidth;
     next.classList.add('active');
@@ -84,7 +152,12 @@ function show(n) {
     if (n === 0) burst(); // fresh flare when we return to the title
 }
 
-const go = d => show(current + d);
+const go = d => {
+    const steps = +slides[current].dataset.steps || 0;
+    if (steps && d > 0 && sub < steps - 1) setSub(slides[current], sub + 1);
+    else if (steps && d < 0 && sub > 0) setSub(slides[current], sub - 1);
+    else show(current + d, d < 0);
+};
 
 addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ' || e.key === 'Enter') { go(1); e.preventDefault(); }
@@ -101,10 +174,12 @@ addEventListener('keydown', e => {
 });
 
 viewport.addEventListener('click', e => {
-    if (e.target.closest('a, #timer')) return;
+    if (e.target.closest('a, #timer, #home')) return;
     const x = e.clientX / innerWidth;
     go(x < 0.2 ? -1 : 1);
 });
+
+document.getElementById('home').addEventListener('click', e => { show(0); e.currentTarget.blur(); });
 
 // ---------- Timer (starts on first advance; click to pause) ----------
 let remaining = PITCH_SECONDS;
@@ -154,7 +229,7 @@ function burst() {
 
 function tick() {
     ctx.clearRect(0, 0, 1600, 900);
-    const intensity = current === 0 ? 1 : current === 3 ? 0.35 : current === 7 ? 0.2 : 0.12;
+    const intensity = current === 0 ? 1 : current === 4 ? 0.35 : current === 7 ? 0.2 : 0.12;
     if (!reduceMotion && embers.length < MAX && Math.random() < 0.5 * intensity + 0.05) {
         spawn(Math.random() * 1600, 920 - (parseFloat(water.style.getPropertyValue('--level')) || 8) * 9);
     }
