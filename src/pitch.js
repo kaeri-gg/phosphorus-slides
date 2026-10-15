@@ -45,6 +45,19 @@ if (VIDEO_2) {
     document.querySelector('#screen-2 .ph').remove();
 }
 
+// Autoplay + loop. Muted is required for browsers to allow autoplay; if the file
+// is still loading, start as soon as it can play.
+function playVideo(v) {
+    v.muted = true;
+    v.loop = true;
+    v.autoplay = true;
+    v.play().catch(() => {
+        v.addEventListener('canplay', () => {
+            if (v.closest('.slide.active')) v.play().catch(() => {});
+        }, { once: true });
+    });
+}
+
 // ---------- Navigation ----------
 let current = -1;
 
@@ -62,7 +75,7 @@ function show(n) {
     next.classList.add('active');
     next.querySelectorAll('video:not([hidden])').forEach(v => {
         v.currentTime = 0;
-        v.play().catch(() => {});
+        playVideo(v);
     });
     current = n;
     water.style.setProperty('--level', `${next.dataset.water || 8}%`);
