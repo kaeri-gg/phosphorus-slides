@@ -143,7 +143,16 @@ h3 { font-weight: 700; font-size: 38px; }
 }
 .tagline { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 36px; margin-top: -10px; }
 .meta { font-size: 26px; color: #ffab00; margin-top: 10px; }
-.byline { font-size: 24px; color: var(--muted); margin-top: 26px; }
+.byline { font-size: 24px; color: var(--muted); }
+
+/* Graceful exit (ported from the threejs-slides hero): logos lift away, the rest sinks, everything dissolves through blur */
+.slide.s-title:not(.active) { transition: opacity .6s ease .15s, visibility 0s .8s; }
+.s-title.leaving .logo-pill { animation: titleUp .6s cubic-bezier(.16, 1, .3, 1) forwards !important; }
+.s-title.leaving .hero-logo { animation: titleLogoOut .7s cubic-bezier(.16, 1, .3, 1) forwards !important; }
+.s-title.leaving .a { animation: titleDown .6s cubic-bezier(.16, 1, .3, 1) forwards !important; }
+@keyframes titleUp { to { opacity: 0; transform: translateY(-46px); filter: blur(10px); } }
+@keyframes titleDown { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(40px); filter: blur(12px); } }
+@keyframes titleLogoOut { to { opacity: 0; transform: scale(1.12) translateY(-24px); filter: blur(22px) drop-shadow(0 0 80px rgba(255, 190, 40, .9)); } }
 
 /* ----- 2. Meet Phos ----- */
 .s-phos { gap: 90px; }
@@ -237,15 +246,74 @@ h3 { font-weight: 700; font-size: 38px; }
 .node.air i { color: var(--flame); } .node.acid i { color: #34d399; }
 
 /* ----- 5. Why ----- */
-.s-why { flex-direction: column; align-items: flex-start; justify-content: center; gap: 70px; }
-.reasons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; width: 100%; }
-.reasons article { padding: 0 50px; border-left: 3px solid rgba(107, 202, 186, .35); }
-.reasons article:first-child { padding-left: 0; border-left: none; }
-.reasons i { font-size: 62px; margin-bottom: 26px; display: block; color: var(--flame-hot); }
-.reasons article:nth-child(2) i { color: var(--water); }
-.reasons article:nth-child(3) i { color: #ff6b5e; }
-.reasons h3 { margin-bottom: 14px; }
-.reasons p { font-size: 28px; line-height: 1.4; color: #cfe2e0; }
+.s-why { padding: 0; }
+.why-horizon {
+    position: absolute; left: 110px; top: 450px; width: 700px; height: 2px; z-index: 0;
+    background: linear-gradient(90deg, transparent, rgba(107, 202, 186, .55) 55%, rgba(107, 202, 186, .1));
+}
+.why-left {
+    position: absolute; left: 110px; top: 50%; translate: 0 -50%; width: 560px; z-index: 5;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 26px;
+}
+.why-badge {
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 20px;
+    letter-spacing: 6px; text-transform: uppercase; color: var(--water);
+}
+.why-title {
+    font-size: 84px; line-height: 1.02; padding-bottom: 8px;
+    background: linear-gradient(90deg, #fff 35%, #ff8e01);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, .8));
+}
+.why-title.swap { animation: whyswap .6s cubic-bezier(.2, .9, .25, 1.1) both; }
+@keyframes whyswap { from { opacity: 0; transform: translateY(22px); filter: blur(6px); } }
+.why-pager { display: flex; align-items: center; gap: 18px; margin-top: 10px; }
+.why-dots { display: flex; gap: 10px; align-items: center; }
+.why-dots i { width: 12px; height: 12px; border-radius: 6px; background: rgba(255, 255, 255, .22); transition: width .5s, background .5s, box-shadow .5s; }
+.why-dots i.on { width: 52px; background: var(--water); box-shadow: 0 0 14px rgba(107, 202, 186, .7); }
+#why-count { font-family: 'Inter', monospace; font-size: 22px; font-weight: 600; letter-spacing: 2px; color: #dcebe9; font-variant-numeric: tabular-nums; }
+
+.why-3d { position: absolute; inset: 0; perspective: 1800px; perspective-origin: 68% 50%; z-index: 2; }
+.why-stack { position: absolute; left: 700px; top: 205px; width: 780px; height: 490px; transform-style: preserve-3d; }
+.why-card {
+    position: absolute; inset: 0; border-radius: 18px; overflow: hidden; background: #0a1230;
+    border: 1px solid rgba(255, 255, 255, .08);
+    transform-origin: center; will-change: transform, opacity;
+    transition: transform .7s cubic-bezier(.16, 1, .3, 1), opacity .6s ease, filter .6s ease, box-shadow .7s ease;
+}
+.why-card.front { -webkit-box-reflect: below 8px linear-gradient(transparent 62%, rgba(255, 255, 255, .16)); }
+.why-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.why-card::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(90deg, rgba(3, 6, 20, .55), rgba(3, 6, 20, .05) 45%, transparent);
+}
+.why-label {
+    position: absolute; left: 30px; bottom: 24px; z-index: 2; display: flex; align-items: center; gap: 12px;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 26px; color: #fff;
+    padding: 8px 18px; border-radius: 12px; background: rgba(3, 6, 20, .6); backdrop-filter: blur(6px);
+}
+.why-label i { color: var(--water); }
+
+/* Grand entrance (ported from the threejs-slides hero step): centred title rises out of a heavy blur over a pulsing glow */
+.why-glow {
+    position: absolute; left: 50%; top: 50%; width: 1100px; height: 520px; translate: -50% -50%; z-index: 1;
+    background: radial-gradient(ellipse 55% 45% at 50% 50%, rgba(107, 202, 186, .24) 0%, rgba(255, 122, 26, .12) 38%, rgba(99, 102, 241, .06) 58%, transparent 75%);
+    filter: blur(54px); pointer-events: none; opacity: 0; transition: opacity 1s ease;
+}
+.s-why.active[data-phase="intro"] .why-glow { opacity: 1; animation: whyGlow 7s ease-in-out infinite alternate; }
+@keyframes whyGlow { from { scale: .95; opacity: .75; } to { scale: 1.06; opacity: 1; } }
+.why-hero { position: absolute; inset: 0; z-index: 6; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
+.why-hero-title { font-size: 108px; line-height: 1; max-width: 1250px; opacity: 0; filter: drop-shadow(0 6px 30px rgba(0, 0, 0, .7)); }
+.why-hero-sub { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 34px; letter-spacing: 1px; color: var(--muted); margin-top: 34px; opacity: 0; }
+.s-why.active[data-phase="intro"] .why-hero-title { animation: whyHeroRise 1.8s cubic-bezier(.16, 1, .3, 1) .1s both; }
+.s-why.active[data-phase="intro"] .why-hero-sub { animation: whyHeroRise 1.8s cubic-bezier(.16, 1, .3, 1) .45s both; }
+.s-why.active[data-phase="cards"] .why-hero-title,
+.s-why.active[data-phase="cards"] .why-hero-sub { animation: whyHeroOut .55s cubic-bezier(.16, 1, .3, 1) forwards; }
+@keyframes whyHeroRise { from { opacity: 0; transform: translateY(46px) scale(.96); filter: blur(22px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes whyHeroOut { from { opacity: 1; filter: blur(0); } to { opacity: 0; transform: translateY(-40px); filter: blur(14px); } }
+/* gallery waits behind the hero, then arrives */
+.why-left, .why-3d, .why-horizon { transition: opacity .8s ease .3s, filter .8s ease .3s; }
+.s-why[data-phase="intro"] .why-left, .s-why[data-phase="intro"] .why-3d, .s-why[data-phase="intro"] .why-horizon { opacity: 0; filter: blur(14px); transition-delay: 0s; transition-duration: .35s; }
 
 /* ----- 6. Team ----- */
 .s-team { flex-direction: column; align-items: center; justify-content: center; gap: 64px; }

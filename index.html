@@ -35,11 +35,30 @@
       </div>
       <img class="hero-logo" src="./assets/pitch/logo.png" alt="White Phosphorus: An Explosive Escape">
       <p class="tagline a" style="--i:5">A 2D platformer about white phosphorus.</p>
-      <p class="meta a" style="--i:6">Available now on itch.io · PC &amp; mobile</p>
+      <p class="meta a" style="--i:6">Available on itch.io · PC &amp; mobile</p>
       <p class="byline a" style="--i:7">Anna &amp; Kathleen · Tallinn University</p>
     </section>
 
-    <!-- 2. Meet Phos -->
+    <!-- 2. Team: we introduce ourselves first -->
+    <section class="slide s-team" data-water="6">
+      <h2 class="a" style="--i:1"><span class="phos">Hello,</span> we are</h2>
+      <div class="people">
+        <article class="person a" style="--i:2">
+          <div class="photo" data-initials="AA"><img src="./assets/team/anna.jpg" alt="Anna Arsenina" onerror="this.remove()"></div>
+          <h3>Anna Arsenina</h3>
+          <p class="role">Artist</p>
+          <span class="folio"><i class="fa-brands fa-discord"></i>annars9030</span>
+        </article>
+        <article class="person a" style="--i:3">
+          <div class="photo" data-initials="KP"><img src="./assets/team/kath.jpg" alt="Kathleen Povadora" onerror="this.remove()"></div>
+          <h3>Kathleen Povadora</h3>
+          <p class="role">Developer</p>
+          <a class="folio" href="https://kaeri-gg.github.io/" target="_blank" rel="noopener"><i class="fa-solid fa-link"></i>kaeri-gg.github.io</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3. Meet Phos -->
     <section class="slide s-phos" data-water="6">
       <figure class="comic a" style="--i:1">
         <img src="./assets/pitch/comic-water.png" alt="Phos ignites when pulled out of water">
@@ -51,7 +70,7 @@
       </div>
     </section>
 
-    <!-- 3. Real chemistry is the rulebook -->
+    <!-- 4. Real chemistry is the rulebook -->
     <section class="slide s-rules" data-water="4">
       <h2 class="a" style="--i:1"><span class="phos">Real chemistry</span> is the rulebook</h2>
       <p class="sub a" style="--i:2">Every mechanic comes from a real property of white phosphorus</p>
@@ -68,7 +87,7 @@
       <div class="node acid a" style="--i:5;left:1240px;top:690px"><i class="fa-solid fa-flask"></i><b>Phosphoric acid</b><span>Glowing blue: heals you</span></div>
     </section>
 
-    <!-- 4. Gameplay video -->
+    <!-- 5. Gameplay video -->
     <section class="slide s-play" data-water="4">
       <div class="copy">
         <h2 class="a" style="--i:1">Real chemistry,<br><span class="phos">real pressure</span></h2>
@@ -80,45 +99,41 @@
       </div>
       <div class="screen a" style="--i:2">
         <video id="vid-gameplay" src="./assets/videos/gameplay.mp4" muted loop playsinline preload="auto"></video>
-        <span class="rec"><i></i>Live gameplay</span>
+        <span class="rec"><i></i>Gameplay</span>
       </div>
     </section>
 
-    <!-- 5. Why check it out -->
-    <section class="slide s-why" data-water="5">
-      <h2 class="a" style="--i:1">Why check out <span class="phos">our game</span>?</h2>
-      <div class="reasons">
-        <article class="a" style="--i:2">
-          <i class="fa-solid fa-flask-vial"></i>
-          <h3>Learning is the gameplay</h3>
-        </article>
-        <article class="a" style="--i:3">
-          <i class="fa-solid fa-child-reaching"></i>
-          <h3>Easy and free</h3>
-        </article>
-        <article class="a" style="--i:4">
-          <i class="fa-solid fa-atom"></i>
-          <h3>Room to grow</h3>
-        </article>
+    <!-- 6. Why check it out: 3D card gallery, Right arrow steps through the reasons (data-steps) -->
+    <section class="slide s-why" data-water="5" data-steps="4" data-phase="intro">
+      <div class="why-glow" aria-hidden="true"></div>
+      <div class="why-hero">
+        <h2 class="why-hero-title">Why check out <span class="phos">our game</span>?</h2>
+        <p class="why-hero-sub">Three reasons to play White Phosphorus</p>
       </div>
-    </section>
-
-    <!-- 6. Team -->
-    <section class="slide s-team" data-water="6">
-      <h2 class="a" style="--i:1"><span class="phos">Who made it</span></h2>
-      <div class="people">
-        <article class="person a" style="--i:2">
-          <div class="photo" data-initials="AA"><img src="./assets/team/anna.jpg" alt="Anna Arsenina" onerror="this.remove()"></div>
-          <h3>Anna Arsenina</h3>
-          <p class="role">Artist</p>
-          <span class="folio"><i class="fa-brands fa-discord"></i>annars9030</span>
-        </article>
-        <article class="person a" style="--i:3">
-          <div class="photo" data-initials="KP"><img src="./assets/team/kath.jpg" alt="Kathleen Povadora" onerror="this.remove()"></div>
-          <h3>Kathleen Povadora</h3>
-          <p class="role">Developer</p>
-          <a class="folio" href="https://kaeri-gg.github.io/" target="_blank" rel="noopener"><i class="fa-solid fa-link"></i>kaeri-gg.github.io</a>
-        </article>
+      <div class="why-horizon" aria-hidden="true"></div>
+      <div class="why-left">
+        <span class="why-badge a" style="--i:1">Why check out our game?</span>
+        <h2 class="why-title a" style="--i:2" id="why-title">Learning is the gameplay</h2>
+        <div class="why-pager a" style="--i:3">
+          <div class="why-dots" id="why-dots"><i></i><i></i><i></i></div>
+          <span id="why-count">01 / 03</span>
+        </div>
+      </div>
+      <div class="why-3d" aria-hidden="false">
+        <div class="why-stack" id="why-stack">
+          <article class="why-card" data-title="Learning is the gameplay">
+            <img src="./assets/pitch/comic-water.png" alt="">
+            <span class="why-label"><i class="fa-solid fa-flask-vial"></i>Learning is the gameplay</span>
+          </article>
+          <article class="why-card" data-title="Easy and free">
+            <img src="./assets/pitch/level.png" alt="">
+            <span class="why-label"><i class="fa-solid fa-child-reaching"></i>Easy and free</span>
+          </article>
+          <article class="why-card" data-title="Room to grow">
+            <img src="./assets/pitch/comic-oven.png" alt="">
+            <span class="why-label"><i class="fa-solid fa-atom"></i>Room to grow</span>
+          </article>
+        </div>
       </div>
     </section>
 
