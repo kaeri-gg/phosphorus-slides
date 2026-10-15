@@ -1,15 +1,15 @@
 import '@fontsource/fredoka/500.css';
 import '@fontsource/fredoka/700.css';
+import '@fontsource/nunito/500.css';
+import '@fontsource/nunito/600.css';
+import '@fontsource/nunito/700.css';
+import '@fontsource/nunito/800.css';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './styles/pitch.css';
-
-// Second gameplay video. Put the file in public/assets/videos/ and set the path,
-// e.g. './assets/videos/second.mp4'. Empty string keeps the placeholder.
-const VIDEO_2 = '';
 
 const PITCH_SECONDS = 120;
 
@@ -30,20 +30,12 @@ addEventListener('resize', fit);
 fit();
 
 // ---------- HP bar = progress (one segment per slide) ----------
-slides.forEach(() => {
+slides.forEach((_, n) => {
     const seg = document.createElement('i');
+    seg.style.setProperty('--t', slides.length > 1 ? (n / (slides.length - 1) * 100).toFixed(1) + '%' : '0%');
     hp.appendChild(seg);
 });
 const segs = [...hp.children];
-
-// ---------- Video 2 placeholder swap ----------
-const vid2 = document.getElementById('vid-2');
-if (VIDEO_2) {
-    vid2.src = VIDEO_2;
-    vid2.hidden = false;
-    document.getElementById('screen-2').classList.remove('placeholder');
-    document.querySelector('#screen-2 .ph').remove();
-}
 
 // Autoplay + loop. Muted is required for browsers to allow autoplay; if the file
 // is still loading, start as soon as it can play.
